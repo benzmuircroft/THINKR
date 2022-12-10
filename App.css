@@ -1,0 +1,229 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  pointer-events: none;
+  width: 160px;
+  height: 160px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+
+.App-thoughts {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #474645;
+  width: calc(100% - 200px);
+  position: absolute;
+  left: 200px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.App-navbar {
+  background-color: #ffffff;
+  min-height: 100vh;
+  font-size: calc(3px + 2vmin);
+  font-weight: bold;
+  color: #f77a13;
+  width: 200px;
+  position: fixed;
+  left: 0px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.Navbar-tools {
+  position: absolute;
+  top: 200px;
+  height: calc(100% - 200px);
+}
+
+.Btn {
+  height: 40px;
+  line-height: 36px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+}
+
+
+.Think {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 160px;
+  background-color: #f79c13;
+}
+
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  pointer-events: none;
+  display: block; /* For Firefox */
+  color: #3b4044;
+}
+
+.Modal-thought {
+  position: absolute;
+  top: 70px;
+  padding: 10px;
+  height: calc(100% - 180px);
+  width: calc(100% - 60px);
+  text-align: left;
+}
+
+.Modal-footer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.Cancel {
+  position: relative;
+  bottom: 0px;
+  margin-right: 10px;
+  width: 100px;
+  background-color: #f72213;
+}
+
+.Ok {
+  position: relative;
+  bottom: 0px;
+  margin-left: 10px;
+  width: 100px;
+  background-color: #3ddb15;
+}
+
+.Edit {
+  position: relative;
+  bottom: 0px;
+  margin-left: 10px;
+  width: 100px;
+  background-color: #2d76ff;
+}
+
+.Sort {
+  position: absolute;
+  bottom: 80px;
+  left: 20px;
+  width:160px;
+  height: calc(100% - 100px);
+  text-align: left;
+  line-height: 32px;
+  overflow-y: scroll;
+}
+
+
+.Modal-case {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.Modal-BG {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #c1b8b8ad;
+}
+
+.Modal-content {
+  position: absolute;
+  padding: 20px;
+  width: 460px;
+  height: calc(100% - 80px);
+  top: 20px;
+  left: 50%;
+  margin-left: -250px;
+  background-color: #ffffff;
+}
+
+.Thought{
+  padding: 10px 70px 30px 70px;
+  width: calc(100% - 140px);
+  position: relative;
+}
+
+.Thought:hover > .opt {
+  display: block;
+}
+
+.opt {
+  display: none;
+}
+
+.x{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #d7cece;
+  cursor: pointer;
+}
+
+.x:hover{
+  color: #ff2d2d;
+}
+
+.e{
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  color: #d7cece;
+  cursor: pointer;
+}
+
+.e:hover{
+  color: #2d76ff;
+}
+
+.u{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  height: 11px;
+  color: #d7cece;
+  cursor: pointer;
+}
+
+
+.d{
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  height: 11px;
+  color: #d7cece;
+  cursor: pointer;
+}
+
+.u:hover,.d:hover{
+  color: #2d76ff;
+}
+
+#root > div > header > div:nth-child(1) > div.opt.u {
+  pointer-events: none;
+}
+
+#root > div > header > div:last-child > div.opt.d {
+  pointer-events: none;
+}
+
+
+pre {
+  font-size: 10px;
+  text-align: left;
+  white-space: pre-wrap;
+}
