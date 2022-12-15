@@ -227,3 +227,11 @@ pre {
   text-align: left;
   white-space: pre-wrap;
 }
+
+.subject {
+  cursor: pointer;
+}
+
+.isSubject {
+  color: #d14e4e;
+}
