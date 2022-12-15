@@ -2,28 +2,28 @@ import React from 'react';
 import {useRef,useEffect} from 'react';
 
 
-function Modal({setOpenModal, setThought, editing, setEditing}){
+function Modal({hasModal, dispatchHasModal, setThought, subject}){
+    console.log('happens?');
     const focusRef = useRef();
     function onEdit(){
-        setOpenModal(false);
         let t=document.getElementsByClassName('Modal-thought')[0].innerText;
-        let update=(JSON.parse(window.localStorage.getItem('thoughts')||'[]'));
-        update[editing]=t;
-        window.localStorage.setItem('thoughts',JSON.stringify(update));
-        setEditing(-1);
+        let update=(JSON.parse(window.localStorage.getItem(subject)||'[]'));
+        update[hasModal.editing]=t;
+        window.localStorage.setItem(subject,JSON.stringify(update));
+        dispatchHasModal({editing:-1,openModal:false,x:'m1'});
         setThought(update);
     }
     function onOk(){
-        setOpenModal(false);
         let t=document.getElementsByClassName('Modal-thought')[0].innerText;
-        let update=(JSON.parse(window.localStorage.getItem('thoughts')||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subject)||'[]'));
         update.unshift(t);
-        window.localStorage.setItem('thoughts',JSON.stringify(update));
+        window.localStorage.setItem(subject,JSON.stringify(update));
+        dispatchHasModal({editing:-1,openModal:false,x:'m2'});
         setThought(update);
     }
     useEffect(()=>{// Runs after the first render() lifecycle
-        if(editing > -1){
-            focusRef.current.innerText=(JSON.parse(window.localStorage.getItem('thoughts')||'[]'))[editing];
+        if(hasModal.editing > -1){
+            focusRef.current.innerText=(JSON.parse(window.localStorage.getItem(subject)||'[]'))[hasModal.editing];
         }
         focusRef.current.focus();
         },[]);//blank array
@@ -34,9 +34,9 @@ function Modal({setOpenModal, setThought, editing, setEditing}){
                 <div>Save Something:</div>
                 <div className="Modal-thought" ref={focusRef} contentEditable="true" placeholder="Links, Video or text ..."></div>
                 <div className="Modal-footer">
-                    <button className="Btn Cancel" onClick={()=>{setOpenModal(false)}}>Cancel</button>
-                    {editing < 0 && <button className="Btn Ok" onClick={()=>{onOk()}}>Ok</button>}
-                    {editing > -1 && <button className="Btn Edit" onClick={()=>{onEdit()}}>Edit</button>}
+                    <button className="Btn Cancel" onClick={()=>{dispatchHasModal({editing:-1,openModal:false,x:'m3'});}}>Cancel</button>
+                    {hasModal.editing < 0 && <button className="Btn Ok" onClick={()=>{onOk()}}>Ok</button>}
+                    {hasModal.editing > -1 && <button className="Btn Edit" onClick={()=>{onEdit()}}>Edit</button>}
                 </div>
             </div>
         </div>
