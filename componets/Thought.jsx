@@ -1,34 +1,30 @@
-function Thought({k, condition, setThought, setEditing, setOpenModal}) {
+function Thought({k, condition, setThought, dispatchHasModal, subject}) {
 
     function unThink(){
-        let update=(JSON.parse(window.localStorage.getItem('thoughts')||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subject)||'[]'));
         if(k > -1) {
             update.splice(k, 1);
           }
-        window.localStorage.setItem('thoughts',JSON.stringify(update));
+        window.localStorage.setItem(subject,JSON.stringify(update));
         setThought(update);
     }
 
-    function reThink(){
-        setEditing(k);
-        setOpenModal(true);
-    }
     
     function sortUp(k){
-        let update=(JSON.parse(window.localStorage.getItem('thoughts')||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subject)||'[]'));
         let mv=update[k];
         update.splice(k,1);
         update.splice(k-1,0,mv);
-        window.localStorage.setItem('thoughts',JSON.stringify(update));
+        window.localStorage.setItem(subject,JSON.stringify(update));
         setThought(update);
     }
 
     function sortDown(k){
-        let update=(JSON.parse(window.localStorage.getItem('thoughts')||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subject)||'[]'));
         let mv=update[k];
         update.splice(k,1);
         update.splice(k+1,0,mv);
-        window.localStorage.setItem('thoughts',JSON.stringify(update));
+        window.localStorage.setItem(subject,JSON.stringify(update));
         setThought(update);
     }
     
@@ -60,7 +56,7 @@ function Thought({k, condition, setThought, setEditing, setOpenModal}) {
             <div className="opt x" onClick={unThink}>
                 <i className="fa-regular fa-circle-xmark"></i>
             </div>
-            <div className="opt e" onClick={reThink}>
+            <div className="opt e" onClick={()=>{dispatchHasModal({editing:k,openModal:true,x:'t1'});}}>
                 <i className="fa-solid fa-pencil"></i>
             </div>
         </div>
