@@ -4,3 +4,4 @@
 React.js mind mapping tool that works with local storage
 
 ![alt text](https://github.com/benzmuircroft/THINKR/blob/main/screen-shot2.png?raw=true)
+![alt text](https://github.com/benzmuircroft/THINKR/blob/main/screen-shot1.png?raw=true)
