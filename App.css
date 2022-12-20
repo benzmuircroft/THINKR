@@ -1,5 +1,11 @@
+
 .App {
   text-align: center;
+}
+
+
+.settings-theme {
+  color: var(--settings-theme)
 }
 
 .App-logo {
@@ -13,13 +19,13 @@
 
 
 .App-thoughts {
-  background-color: #ffffff;
+  text-align:left;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(2px + 2vmin);
   color: #474645;
   width: calc(100% - 200px);
   position: absolute;
@@ -29,7 +35,6 @@
 }
 
 .App-navbar {
-  background-color: #ffffff;
   min-height: 100vh;
   font-size: calc(3px + 2vmin);
   font-weight: bold;
@@ -45,8 +50,22 @@
 
 .Navbar-tools {
   position: absolute;
+  top: 240px;
+  height: calc(100% - 240px);
+}
+
+.Navbar-settings {
+  position: absolute;
   top: 200px;
-  height: calc(100% - 200px);
+  left: 20px;
+  width: 150px;
+  height: 20px;
+  text-align: left;
+  padding: 10px 10px 10px 0px;
+}
+
+.setting {
+  margin-right: 5px;
 }
 
 .Btn {
@@ -132,6 +151,7 @@
   left: 0px;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 
 .Modal-BG {
@@ -149,13 +169,20 @@
   top: 20px;
   left: 50%;
   margin-left: -250px;
-  background-color: #ffffff;
 }
 
 .Thought{
   padding: 10px 70px 30px 70px;
   width: calc(100% - 140px);
   position: relative;
+}
+
+.Thought > p {
+  margin-top:0px;
+}
+.Thought > pre {
+  font-size: 10px;
+  filter: hue-rotate(140deg)saturate(3.5);
 }
 
 .Thought:hover > .opt {
@@ -170,7 +197,6 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  color: #d7cece;
   cursor: pointer;
 }
 
@@ -182,7 +208,6 @@
   position: absolute;
   top: 10px;
   right: 40px;
-  color: #d7cece;
   cursor: pointer;
 }
 
@@ -195,7 +220,6 @@
   top: 5px;
   left: 10px;
   height: 11px;
-  color: #d7cece;
   cursor: pointer;
 }
 
@@ -205,7 +229,6 @@
   top: 15px;
   left: 10px;
   height: 11px;
-  color: #d7cece;
   cursor: pointer;
 }
 
@@ -223,8 +246,6 @@
 
 
 pre {
-  font-size: 10px;
-  text-align: left;
   white-space: pre-wrap;
 }
 
@@ -234,4 +255,56 @@ pre {
 
 .isSubject {
   color: #d14e4e;
+}
+
+
+#light .App-thoughts {
+  background-color: #ffffff;
+}
+
+#dark .App-thoughts {
+  background-color: #2a2727;
+  color-scheme: dark; 
+}
+
+#light .App-navbar {
+  background-color: #ffffff;
+}
+
+#dark .App-navbar {
+  background-color: #2a2727;
+  color-scheme: dark;
+}
+
+
+#dark .App-thoughts > .Thought > p > a {
+  color: #6ccfff;
+}
+
+#dark .App-thoughts > .Thought > p {
+  color: #a59c9c;
+}
+
+#dark .App-thoughts > .Thought > div.opt {
+  color: #0c0c0c;
+}
+
+#light .App-thoughts > .Thought > div.opt {
+  color: #d7cece;
+}
+
+#light > .App-navbar > .Navbar-settings > .setTheme {
+  color: #f1c618;
+}
+
+#dark > .App-navbar > .Navbar-settings > .setTheme {
+  color: #4c7183;
+}
+
+#light > .Modal-case > .Modal-content {
+  background-color: #ffffff;
+}
+
+#dark > .Modal-case > .Modal-content {
+  background-color: #2a2727;
 }
