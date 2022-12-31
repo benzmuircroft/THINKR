@@ -1,43 +1,60 @@
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
-function Thought({k/*App Int*/,markdown/*App prop*/,sThought/*App setState*/,hasModal/*App useRef*/, subject/*App useRef*/}) {
-
-    
-    
+const Thought = React.memo(function Thought({k,markdown,setThought,setModal,subjectRef,navEdit,folderRef,resumeRef}) {
     function unThink(){
-        let update=(JSON.parse(window.localStorage.getItem(subject.current)||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subjectRef.current)||'[]'));
+        let folderName;
         if(k>-1){
+            if(navEdit){
+                folderName=update[k].toLowerCase();
+                window.localStorage.removeItem(folderName);
+            }
             update.splice(k,1);
             }
-        window.localStorage.setItem(subject.current,JSON.stringify(update));
-        sThought(update);
+        window.localStorage.setItem(subjectRef.current,JSON.stringify(update));
+        if(navEdit){
+            update=(JSON.parse(window.localStorage.getItem(subjectRef.current)||'[]'));
+            if(resumeRef.current===folderName){
+                if(update[0]){
+                    resumeRef.current=update[0].toLowerCase();
+                }
+                else{//no more folders left
+                    resumeRef.current=null;
+                }
+            }
         }
-    
+        setThought(update);
+    }
+    function onEdit(){
+        if(navEdit){
+            let folders=JSON.parse(window.localStorage.getItem('folders'));
+            folderRef.current=folders[k];
+        }
+        setModal({editing:k,open:true});
+    }
     function sortUp(k){
-        let update=(JSON.parse(window.localStorage.getItem(subject.current)||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subjectRef.current)||'[]'));
         let mv=update[k];
         update.splice(k,1);
         update.splice(k-1,0,mv);
-        window.localStorage.setItem(subject.current,JSON.stringify(update));
-        sThought(update);
-        }
-
+        window.localStorage.setItem(subjectRef.current,JSON.stringify(update));
+        setThought(update);
+    }
     function sortDown(k){
-        let update=(JSON.parse(window.localStorage.getItem(subject.current)||'[]'));
+        let update=(JSON.parse(window.localStorage.getItem(subjectRef.current)||'[]'));
         let mv=update[k];
         update.splice(k,1);
         update.splice(k+1,0,mv);
-        window.localStorage.setItem(subject.current,JSON.stringify(update));
-        sThought(update);
-        }
-    
+        window.localStorage.setItem(subjectRef.current,JSON.stringify(update));
+        setThought(update);
+    }
     let t=markdown;
     if(typeof t!='string'){t=JSON.stringify(t);}//just in case ...
-    
     return (
         <div className="Thought">
             <div className="opt d" onClick={()=>sortDown(k)}>
@@ -46,7 +63,6 @@ function Thought({k/*App Int*/,markdown/*App prop*/,sThought/*App setState*/,has
             <div className="opt u" onClick={()=>sortUp(k)}>
                 <i className="fa-solid fa-sort-up"></i>
             </div>
-
             <ReactMarkdown
                 children={t}
                 rehypePlugins={[rehypeRaw]}
@@ -69,15 +85,14 @@ function Thought({k/*App Int*/,markdown/*App prop*/,sThought/*App setState*/,has
                     }
                 }}
             />
-
             <div className="opt x" onClick={unThink}>
                 <i className="fa-regular fa-circle-xmark"></i>
             </div>
-            <div className="opt e" onClick={()=>{hasModal.current.trigger({editing:k,openModal:true});}}>
+            <div className="opt e" onClick={onEdit}>
                 <i className="fa-solid fa-pencil"></i>
             </div>
         </div>
-        );
-    }
+    );
+});
 
   export default Thought;
