@@ -1,58 +1,105 @@
 import React from 'react';
 import logo from '../thinkr.png';
 import Modal from './Modal';
-import {useState} from 'react';
+import Folders from './Folders.js';
 
 
-
-export default function Navbar({theme/*App useState*/,toggleTheme/*App function*/,subject/*App useRef*/,sThought/*App setState*/,hasModal/*App useRef*/}){
-
-    const [showModal,rShowModal]=useState(false);//re-render watcher
-    
-    hasModal.current.trigger=(obj)=>{
-        hasModal.current.editing=obj.editing;
-        hasModal.current.openModal=obj.openModal;
-        rShowModal(showModal=>(showModal?false:true));//cause navbar to re-render
-        };
-      
+function Navbar({theme,toggleTheme,subjectRef,setThought,modal,setModal,navEdit,setNavEdit,folderRef,resumeRef}){
+    function navEditor(){
+        if(!navEdit){//start
+            resumeRef.current=subjectRef.current+'';
+            subjectRef.current='folders';
+            setThought(JSON.parse(window.localStorage.getItem(subjectRef.current)||'[]'));
+            setNavEdit(true);
+        }
+        else{//end
+            subjectRef.current=resumeRef.current+'';
+            resumeRef.current=null;
+            setThought(JSON.parse(window.localStorage.getItem(subjectRef.current)||'[]'));
+            setNavEdit(false);
+        }
+    }
     function switchSubject(ev){
-        let s=!ev?subject.current:(ev.target.innerText.toLowerCase().replace(' ',''));
-        if(s!==subject.current||!ev){
+        let s=!ev?subjectRef.current:(ev.target.innerText.toLowerCase().replace(' ',''));
+        if(s!==subjectRef.current||!ev){
             let these=document.getElementsByClassName('subject');
             for(let i=0;i<these.length;i+=1){
                 these[i].classList.remove('isSuject');
                 if(these[i].innerText===ev.target.innerText){
                     these[i].classList.add='isSubject';
-                    }
                 }
-            subject.current=s;
-            window.localStorage.setItem('isSubject',s);
-            sThought(JSON.parse(window.localStorage.getItem(s)||'[]'));
             }
+            subjectRef.current=s;
+            window.localStorage.setItem('isSubject',s);
+            setThought(JSON.parse(window.localStorage.getItem(s)||'[]'));
         }
+    }
     return (
         <>
-            {hasModal.current.openModal&&<Modal hasModal={hasModal} sThought={sThought} subject={subject}/>}
+            {modal.open&&
+            <Modal 
+            modal={modal} 
+            setModal={setModal} 
+            setThought={setThought} 
+            subjectRef={subjectRef} 
+            navEdit={navEdit} 
+            folderRef={folderRef} 
+            resumeRef={resumeRef}/>}
             <div className="App-navbar">
-            <img src={logo} className="App-logo" alt="logo" />
-            <div className="Navbar-settings">
-                <i className={(theme==='light'?"fa-solid fa-lightbulb":"fa-solid fa-lightbulb")+" setTheme setting"} title="Switch theme" onClick={toggleTheme}></i>
-            </div>
-            <div className="Navbar-tools">
-                <div className="Sort">
-                    <div className={"subject"+(subject.current==='thoughts'? " isSubject":"")} onClick={(ev)=>{switchSubject(ev);}}>
-                    <i className="fa-solid fa-brain"></i> Thoughts
-                    </div>
-                    <div className={"subject"+(subject.current==='work'? " isSubject":"")} onClick={(ev)=>{switchSubject(ev);}}>
-                    <i className="fa-solid fa-briefcase"></i> Work
-                    </div>
-                    <div className={"subject"+(subject.current==='reminders'? " isSubject":"")} onClick={(ev)=>{switchSubject(ev);}}>
-                    <i className="fa-solid fa-bell"></i> Reminders
-                    </div>
+                <img src={logo} className="App-logo" alt="logo" />
+                <div className="Navbar-settings">
+                    <i 
+                    className={(theme==='light'?"fa-solid fa-lightbulb":"fa-solid fa-lightbulb")+" setTheme setting"} 
+                    title="Switch theme" 
+                    onClick={toggleTheme}>
+                    </i>
+                    <i 
+                    className="fa-solid fa-folder editFolders" 
+                    style={{color:'#db9e5f'}} 
+                    onClick={navEditor}>
+                    </i>
+                    <i 
+                    className={"fa-solid fa-handshake-angle"+(navEdit?" dissabled":"")} 
+                    style={{color:'#64e132'}}>
+                    </i>
+                    <i 
+                    className={"fa-solid fa-share-nodes"+(navEdit?" dissabled":"")} 
+                    style={{color:'#f79c13'}}>
+                    </i>
+                    <i 
+                    className={"fa-solid fa-circle-info"+(navEdit?" dissabled":"")} 
+                    style={{color:'#229ef9'}}>
+                    </i>
                 </div>
-                <button className="Btn Think" onClick={()=>{hasModal.current.trigger({editing:-1,openModal:true});}}>THINK</button>
-            </div>
+                <div className="Navbar-tools">
+                    <div className="Sort">
+                        <Folders 
+                        navEdit={navEdit} 
+                        subjectRef={subjectRef} 
+                        switchSubject={switchSubject}
+                        />
+                    </div>
+                    {
+                        (!navEdit)?(
+                            <button 
+                            className="Btn Think" 
+                            onClick={()=>{setModal({editing:-1,open:true});}}>
+                                THINK
+                            </button>
+                        ):(
+                            <button 
+                            className="Btn Think" 
+                            style={{backgroundColor:'#db9e5f'}} 
+                            onClick={()=>{setModal({editing:-1,open:true});}}>
+                                <i className="fa-solid fa-folder-plus" style={{marginRight:'5px'}}></i> 
+                                NEW
+                            </button>
+                        )
+                    }
+                </div>
             </div>
         </>
-        )
-    }
+    );
+}
+
+export default Navbar;
