@@ -4,9 +4,6 @@
 }
 
 
-.settings-theme {
-  color: var(--settings-theme)
-}
 
 .App-logo {
   pointer-events: none;
@@ -15,6 +12,18 @@
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+a {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    color: #229ef9;
+    cursor: pointer;
+}
+
+.Thought > iframe {
+    margin-top: 7px;
 }
 
 
@@ -38,7 +47,7 @@
   min-height: 100vh;
   font-size: calc(3px + 2vmin);
   font-weight: bold;
-  color: #f77a13;
+  color: #db9e5f;
   width: 200px;
   position: fixed;
   left: 0px;
@@ -64,6 +73,14 @@
   padding: 10px 10px 10px 0px;
 }
 
+.Navbar-settings > i {
+    margin-right: 10px;
+  }
+  
+.Navbar-settings > i:hover {
+    cursor: pointer;
+}
+
 .setting {
   margin-right: 5px;
 }
@@ -76,6 +93,7 @@
   color: #ffffff;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 
@@ -91,22 +109,52 @@
   content: attr(placeholder);
   pointer-events: none;
   display: block; /* For Firefox */
-  color: #3b4044;
+  color: #d7be30;/* this is placeholder color*/
 }
 
-.Modal-thought {
+.modalMarkdown {
   position: absolute;
   top: 70px;
   padding: 10px;
   height: calc(100% - 180px);
   width: calc(100% - 60px);
   text-align: left;
+  outline: none;
+  background: #fcff7b;
+  color: #49657c;
+  overflow: auto;
+}
+
+.folderName {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    border: none;
+    padding: 10px;
+    width: calc(100% - 60px);
+    text-align: left;
+    outline: none;
+    background: #fcff7b;
+    color: #49657c;
+    overflow: auto;
+}
+
+.dissabled {
+  pointer-events: none;
+  opacity: 0.5;  
 }
 
 .Modal-footer {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: calc(100% - 40px);
+    height: 40px;
+}
+
+.comment {
+    color: #d7be30;
+    user-select: none;
 }
 
 .Cancel {
@@ -131,6 +179,24 @@
   margin-left: 10px;
   width: 100px;
   background-color: #2d76ff;
+}
+
+.MDGuide {
+    position: relative;
+    bottom: 0px;
+    margin-right: 20px;
+    width: 220px;
+    color: #2d76ff;
+    background: none;
+  }
+  
+.Back {
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    width: 100px;
+    color: #f72213;
+    background: none;
 }
 
 .Sort {
@@ -175,6 +241,16 @@
   padding: 10px 70px 30px 70px;
   width: calc(100% - 140px);
   position: relative;
+  right: 10px;
+  border-radius: 13px;
+}
+
+.Thought:hover{
+    background-color:rgba(244, 244, 255, 0.03);
+}
+
+#light > header > div:hover {
+    background-color:rgba(44, 44, 0, 0.07);
 }
 
 .Thought > p {
@@ -196,18 +272,18 @@
 .x{
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 15px;
   cursor: pointer;
 }
 
 .x:hover{
-  color: #ff2d2d;
+  color: #ff2d2d!important;
 }
 
 .e{
   position: absolute;
   top: 10px;
-  right: 40px;
+  right: 35px;
   cursor: pointer;
 }
 
@@ -217,8 +293,8 @@
 
 .u{
   position: absolute;
-  top: 5px;
-  left: 10px;
+  top: 10px;
+  left: 15px;
   height: 11px;
   cursor: pointer;
 }
@@ -226,15 +302,16 @@
 
 .d{
   position: absolute;
-  top: 15px;
-  left: 10px;
+  top: 20px;
+  left: 15px;
   height: 11px;
   cursor: pointer;
 }
 
-.u:hover,.d:hover{
-  color: #2d76ff;
+.u:hover,.d:hover,.e:hover{
+  color: #2d76ff!important;
 }
+
 
 #root > div > header > div:nth-child(1) > div.opt.u {
   pointer-events: none;
@@ -254,12 +331,12 @@ pre {
 }
 
 .isSubject {
-  color: #d14e4e;
+  color: #d35857;
 }
 
 
 #light .App-thoughts {
-  background-color: #ffffff;
+  background-color: #f6f4f2;
 }
 
 #dark .App-thoughts {
@@ -268,7 +345,7 @@ pre {
 }
 
 #light .App-navbar {
-  background-color: #ffffff;
+  background-color: #f6f4f2;
 }
 
 #dark .App-navbar {
@@ -294,12 +371,20 @@ pre {
 }
 
 #light > .App-navbar > .Navbar-settings > .setTheme {
-  color: #f1c618;
+  color: #ffc94d;
 }
+
+#light > .App-navbar > .Navbar-settings > .setTheme:hover {
+    color: #4c7183;
+  }
 
 #dark > .App-navbar > .Navbar-settings > .setTheme {
   color: #4c7183;
 }
+
+#dark > .App-navbar > .Navbar-settings > .setTheme:hover {
+    color: #ffc94d;
+  }
 
 #light > .Modal-case > .Modal-content {
   background-color: #ffffff;
@@ -307,4 +392,20 @@ pre {
 
 #dark > .Modal-case > .Modal-content {
   background-color: #2a2727;
+}
+
+.Modal-content.error > div.Modal-footer > button.Btn.Ok,
+.Modal-content.error > div.Modal-footer > button.Btn.Edit {
+    pointer-events: none;
+    opacity: 0.5;  
+}
+
+.Modal-content.error > input {
+    color: #ff0000;
+}
+
+.Modal-content.forinput {
+    top: 50%;
+    height: 160px;
+    margin-top: -80px;
 }
